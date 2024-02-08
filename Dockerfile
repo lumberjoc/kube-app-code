@@ -1,17 +1,19 @@
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim-buster
 
-# Set the working directory in the container
-WORKDIR /app
+FROM node:10
 
-# Copy the dependencies file to the working directory
-COPY requirements.txt .
+# Create app directory
+WORKDIR /usr/src/app
 
-# Install any needed dependencies specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
 
-# Copy the content of the local src directory to the working directory
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
 COPY . .
 
-# Specify the command to run on container start
-CMD [ "python3", "app.py" ]
+EXPOSE 8080
+CMD [ "node", "server.js" ]
