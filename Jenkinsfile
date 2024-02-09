@@ -9,7 +9,7 @@ node {
 
     stage('Build image') {
   
-       app = docker.build("lumberjoc/test")
+       app = docker.build("lumberjoc/volley-node-app")
     }
 
     stage('Test image') {
